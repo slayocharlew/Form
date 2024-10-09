@@ -1,75 +1,39 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Multiple Names Input Form</title>
-  <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>STEM Parent Form</title>
+    <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
     <div class="form_wrapper">
-        <div class="form_container">
-          <div class="title_container">
-            <h2>Responsive Registration Form</h2>
-          </div>
-          <div class="row clearfix">
-            <div class="">
-              <form>
-                <div class="input_field"> <span><i aria-hidden="true" class="fa fa-envelope"></i></span>
-                  <input type="email" name="email" placeholder="Email" required />
-                </div>
-                <div class="input_field"> <span><i aria-hidden="true" class="fa fa-lock"></i></span>
-                  <input type="password" name="password" placeholder="Password" required />
-                </div>
-                <div class="input_field"> <span><i aria-hidden="true" class="fa fa-lock"></i></span>
-                  <input type="password" name="password" placeholder="Re-type Password" required />
-                </div>
-                <div class="row clearfix">
-                  <div class="col_half">
-                    <div class="input_field"> <span><i aria-hidden="true" class="fa fa-user"></i></span>
-                      <input type="text" name="name" placeholder="First Name" />
-                    </div>
-                  </div>
-                  <div class="col_half">
-                    <div class="input_field"> <span><i aria-hidden="true" class="fa fa-user"></i></span>
-                      <input type="text" name="name" placeholder="Last Name" required />
-                    </div>
-                  </div>
-                </div>
-                      <div class="input_field radio_option">
-                    <input type="radio" name="radiogroup1" id="rd1">
-                    <label for="rd1">Male</label>
-                    <input type="radio" name="radiogroup1" id="rd2">
-                    <label for="rd2">Female</label>
-                    </div>
-                    <div class="input_field select_option">
-                      <select>
-                        <option>Select a country</option>
-                        <option>Option 1</option>
-                        <option>Option 2</option>
-                      </select>
-                      <div class="select_arrow"></div>
-                    </div>
-                  <div class="input_field checkbox_option">
-                      <input type="checkbox" id="cb1">
-                      <label for="cb1">I agree with terms and conditions</label>
-                  </div>
-                  <div class="input_field checkbox_option">
-                      <input type="checkbox" id="cb2">
-                      <label for="cb2">I want to receive the newsletter</label>
-                  </div>
-                <input class="button" type="submit" value="Register" />
-              </form>
-            </div>
-          </div>
+        <div class="title_container">
+            <h2>Parent/Guardian Registration Form</h2>
         </div>
+        <form id="parentForm" onsubmit="submitForm(event)">
+            <div class="input_field">
+                <label for="parentName">Parent/Guardian Name</label>
+                <input type="text" id="parentName" name="parentName" placeholder="Enter your name" required>
+            </div>
+            <div class="input_field">
+                <label for="parentPhone">Phone Number</label>
+                <input type="text" id="parentPhone" name="parentPhone" placeholder="Enter your phone number" required>
+            </div>
+            <div class="children_container">
+                <div class="child">
+                    <div class="input_field">
+                        <label for="childName1">Child Name</label>
+                        <input type="text" id="childName1" name="childName[]" placeholder="Enter child name" required>
+                    </div>
+                </div>
+            </div>
+            <button type="button" onclick="addChild()">Add Another Child</button>
+            <input type="submit" value="Submit">
+        </form>
+        <div id="notification" class="notification" style="display: none;">Data submitted successfully!</div>
     </div>
-  <script src="scripts.js"></script>
+
+    <script src="Js/script.js"></script>
 </body>
 </html>
-
-
-
-
-
-

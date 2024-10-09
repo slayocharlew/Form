@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign-Out Form</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="form_wrapper">
+        <div class="title_container">
+            <h2>Parent/Guardian Sign-Out Form</h2>
+        </div>
+        <form id="signOutForm" onsubmit="signOut(event)">
+            <div class="input_field">
+                <label for="parentPhone">Phone Number</label>
+                <input type="text" id="parentPhone" name="parentPhone" placeholder="Enter your phone number" required>
+            </div>
+            <button type="button" onclick="fetchChildName()">Fetch Child Name</button>
+            <div id="childNameContainer" style="display: none;">
+                <div class="input_field">
+                    <label for="childName">Child Name</label>
+                    <input type="text" id="childName" name="childName" readonly>
+                </div>
+                <input type="submit" value="Confirm Sign Out">
+            </div>
+        </form>
+        <div id="notification" class="notification" style="display: none;">Sign-out successful!</div>
+    </div>
+
+    <script src="Js/output.js"></script>
+</body>
+</html>
