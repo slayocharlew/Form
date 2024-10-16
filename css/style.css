@@ -138,7 +138,7 @@ body {
     background: #fafafa;
   }
   
-  input[type="submit"] {
+  button[type="submit"] {
     background: #f5ba1a;
     height: 35px;
     line-height: 35px;

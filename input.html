@@ -11,7 +11,7 @@
         <div class="title_container">
             <h2>Parent/Guardian Registration Form</h2>
         </div>
-        <form id="parentForm" onsubmit="submitForm(event)">
+        <form id="parentForm">
             <div class="input_field">
                 <label for="parentName">Parent/Guardian Name</label>
                 <input type="text" id="parentName" name="parentName" placeholder="Enter your name" required>
@@ -26,14 +26,19 @@
                         <label for="childName1">Child Name</label>
                         <input type="text" id="childName1" name="childName[]" placeholder="Enter child name" required>
                     </div>
+                    <div class="input_field">
+                        <label for="childAge1">Child Age</label>
+                        <input type="number" id="childAge1" name="childAge[]" placeholder="Enter child age" required>
+                    </div>
                 </div>
             </div>
-            <button type="button" onclick="addChild()">Add Another Child</button>
-            <input type="submit" value="Submit">
+            <button type="button" id="addChildButton">Add Another Child</button>
+            <button type="submit">Submit</button>
         </form>
         <div id="notification" class="notification" style="display: none;">Data submitted successfully!</div>
     </div>
 
-    <script src="Js/script.js"></script>
+    <!-- Your custom script (as a module) -->
+    <script type="module" src="Js/script.js"></script>
 </body>
 </html>
