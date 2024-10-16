@@ -1,33 +1,52 @@
-function fetchChildName() {
-    const parentPhone = document.getElementById('parentPhone').value;
+// Import the necessary Firebase functions
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-app.js";
+import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-database.js";
+
+// Your web app's Firebase configuration
+const firebaseConfig = {
+    apiKey: "AIzaSyCNbSygpMwn5groYbfL1vGxsHqvbDOnFOs",
+    authDomain: "attendance-scan-c7af7.firebaseapp.com",
+    databaseURL: "https://attendance-scan-c7af7-default-rtdb.firebaseio.com",
+    projectId: "attendance-scan-c7af7",
+    storageBucket: "attendance-scan-c7af7.appspot.com",
+    messagingSenderId: "638130886976",
+    appId: "1:638130886976:web:ba3b42703e8d46d55c42a5"
+};
+
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+const database = getDatabase(app);
+
+// Attach fetchChildName to the global window object
+window.fetchChildName = function () {
+    const parentPhone = document.getElementById('parentPhone').value.trim();
 
     if (parentPhone) {
-        // Placeholder: Replace this block with code to fetch data from your database
-        // Example: You might use an API call to fetch the child name based on the phone number
-        // fetch(`https://yourapiurl.com/child?phone=${parentPhone}`)
-        //     .then(response => response.json())
-        //     .then(data => {
-        //         const childName = data.childName;
-        //         if (childName) {
-        //             document.getElementById('childName').value = childName;
-        //             document.getElementById('childNameContainer').style.display = 'block';
-        //         } else {
-        //             alert('No child found for this phone number. Please check again.');
-        //         }
-        //     })
-        //     .catch(error => {
-        //         console.error('Error fetching data:', error);
-        //         alert('Error fetching child name. Please try again later.');
-        //     });
+        const parentRef = ref(database, 'parents/' + parentPhone);
+        console.log("Fetching child names for phone:", parentPhone); // Debugging log
 
-        // Temporary alert until database integration
-        alert('Database fetch functionality to be implemented.');
+        // Use onValue to listen for changes
+        onValue(parentRef, (snapshot) => {
+            if (snapshot.exists()) {
+                const data = snapshot.val();
+                const childNames = data.children.map(child => child.name).join(", "); // Joining child names
+
+                document.getElementById('childName').value = childNames; // Display child names
+                document.getElementById('childNameContainer').style.display = 'block'; // Show the child name input
+            } else {
+                alert('No child found for this phone number. Please check again.');
+            }
+        }, (error) => {
+            console.error('Error fetching data:', error);
+            alert('Error fetching child name. Please try again later.');
+        });
     } else {
         alert('Please enter a phone number.');
     }
 }
 
-function signOut(event) {
+// Sign-out function remains the same
+window.signOut = function(event) {
     event.preventDefault(); // Prevent the form from submitting normally
 
     const childName = document.getElementById('childName').value;

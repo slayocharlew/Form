@@ -16,7 +16,7 @@
                 <label for="parentPhone">Phone Number</label>
                 <input type="text" id="parentPhone" name="parentPhone" placeholder="Enter your phone number" required>
             </div>
-            <button type="button" onclick="fetchChildName()">Fetch Child Name</button>
+            <button type="button" id="fetchButton">Fetch Child Name</button>
             <div id="childNameContainer" style="display: none;">
                 <div class="input_field">
                     <label for="childName">Child Name</label>
@@ -28,6 +28,7 @@
         <div id="notification" class="notification" style="display: none;">Sign-out successful!</div>
     </div>
 
-    <script src="Js/output.js"></script>
+    <!-- Your custom script (as a module) -->
+    <script type="module" src="Js/output.js"></script>
 </body>
 </html>
