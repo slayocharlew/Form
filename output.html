@@ -16,12 +16,10 @@
                 <label for="parentPhone">Phone Number</label>
                 <input type="text" id="parentPhone" name="parentPhone" placeholder="Enter your phone number" required>
             </div>
-            <button type="button" id="fetchButton">Fetch Child Name</button>
+            <button type="button" id="fetchButton">Fetch Child Names</button>
             <div id="childNameContainer" style="display: none;">
-                <div class="input_field">
-                    <label for="childName">Child Name</label>
-                    <input type="text" id="childName" name="childName" readonly>
-                </div>
+                <label>Children Names:</label>
+                <ul id="childList"></ul>
                 <input type="submit" value="Confirm Sign Out">
             </div>
         </form>
