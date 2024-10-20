@@ -5,5 +5,5 @@ function parentRegister() {
 
 // Function for School Visitor Register button
 function visitorRegister() {
-    window.location.href = "output.html"; // Update with the actual URL for visitor registration
+    window.location.href = "School_visit.html"; // Update with the actual URL for visitor registration
 }

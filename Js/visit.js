@@ -19,16 +19,16 @@ const database = getDatabase(app);
 
 // Function to save visitor data to Firebase
 function saveVisitorData(schoolName, guiderName, phoneNumber, numberOfStudents, dateOfVisit) {
-    const visitorRef = ref(database, 'visitor guider or teach name/' + phoneNumber);
+    const visitorRef = ref(database, 'visitor_guider_or_teacher/' + phoneNumber);
     set(visitorRef, {
-        schoolName: schoolName,
-        guiderName: guiderName,
-        phoneNumber: phoneNumber,
-        numberOfStudents: numberOfStudents,
-        dateOfVisit: dateOfVisit
+        schoo_lName: schoolName,
+        guider_Name: guiderName,
+        phone_Number: phoneNumber,
+        number_Of_Students: numberOfStudents,
+        date_Of_Visit: dateOfVisit
     })
     .then(() => {
-        console.log('Data saved successfully!');
+        console.log('Data saved successfully to visitor_guider_or_teacher node!');
     })
     .catch((error) => {
         console.error('Error saving data:', error);
@@ -39,28 +39,33 @@ function saveVisitorData(schoolName, guiderName, phoneNumber, numberOfStudents, 
 function submitForm(event) {
     event.preventDefault();
 
-    const schoolName = document.getElementById('schoolName').value;
-    const guiderName = document.getElementById('guiderName').value;
-    const phoneNumber = document.getElementById('phoneNumber').value;
-    const numberOfStudents = document.getElementById('numberOfStudents').value;
+    const schoolName = document.getElementById('schoolName').value.trim();
+    const guiderName = document.getElementById('guiderName').value.trim();
+    const phoneNumber = document.getElementById('phoneNumber').value.trim();
+    const numberOfStudents = document.getElementById('numberOfStudents').value.trim();
     const dateOfVisit = document.getElementById('dateOfVisit').value;
 
-    // Save data to Firebase
-    saveVisitorData(schoolName, guiderName, phoneNumber, numberOfStudents, dateOfVisit);
+    if (schoolName && guiderName && phoneNumber && numberOfStudents && dateOfVisit) {
+        // Save data to Firebase
+        saveVisitorData(schoolName, guiderName, phoneNumber, numberOfStudents, dateOfVisit);
 
-    // Display the notification
-    const notification = document.getElementById('notification');
-    notification.style.display = 'block';
-    notification.classList.add('show');
+        // Display the notification
+        const notification = document.getElementById('notification');
+        notification.style.display = 'block';
+        notification.classList.add('show');
 
-    // Reset the form fields
-    const form = document.getElementById('schoolVisitForm');
-    form.reset();
+        // Reset the form fields
+        const form = document.getElementById('schoolVisitForm');
+        form.reset();
 
-    // Optionally hide the notification after a few seconds
-    setTimeout(() => {
-        notification.style.display = 'none';
-    }, 3000);
+        // Optionally hide the notification after a few seconds
+        setTimeout(() => {
+            notification.style.display = 'none';
+        }, 3000);
+    } else {
+        console.error('Please fill in all the required fields.');
+        alert('Please fill in all the required fields.');
+    }
 }
 
 // Attach the submit event to the form
