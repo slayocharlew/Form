@@ -17,13 +17,12 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const database = getDatabase(app);
 
-function fetchChildName() {
-    const parentPhone = document.getElementById('parentPhone').value.trim();
+function fetchData() {
+    const phoneNumber = document.getElementById('parentPhone').value.trim();
 
-    if (parentPhone) {
-        const parentRef = ref(database, 'parents/' + parentPhone);
-
-        // Fetch the parent data from Firebase
+    if (phoneNumber) {
+        // Check if the phone number belongs to a parent
+        const parentRef = ref(database, 'parents/' + phoneNumber);
         get(parentRef)
             .then((snapshot) => {
                 if (snapshot.exists()) {
@@ -38,46 +37,50 @@ function fetchChildName() {
                         childList.appendChild(listItem);
                     });
 
-                    document.getElementById('childNameContainer').style.display = 'block'; // Show the child name list
+                    document.getElementById('childNameContainer').style.display = 'block';
+                    document.getElementById('visitorDetails').style.display = 'none';
                 } else {
-                    alert('No child found for this phone number. Please check again.');
+                    // If no parent details are found, check the "visitor_guider_or_teacher" node
+                    const visitorRef = ref(database, 'visitor_guider_or_teacher/' + phoneNumber);
+                    get(visitorRef)
+                        .then((visitorSnapshot) => {
+                            if (visitorSnapshot.exists()) {
+                                const visitorData = visitorSnapshot.val();
+
+                                // Check and log the visitorData to verify structure
+                                console.log('Fetched Visitor Data:', visitorData);
+
+                                // Access the keys based on the actual structure
+                                const schoolName = visitorData.schoolName || visitorData.school || "Not Available";
+                                const guiderName = visitorData.guiderName || visitorData.teacherName || "Not Available";
+                                const numberOfStudents = visitorData.numberOfStudents || visitorData.students || "Not Available";
+
+                                // Display the fetched details
+                                document.getElementById('visitorDetails').innerHTML = `
+                                    <p>School Name: ${schoolName}</p>
+                                    <p>Guider Name: ${guiderName}</p>
+                                    <p>Number of Students: ${numberOfStudents}</p>
+                                `;
+                                document.getElementById('childNameContainer').style.display = 'none';
+                                document.getElementById('visitorDetails').style.display = 'block';
+                            } else {
+                                alert('No details found for this phone number.');
+                            }
+                        })
+                        .catch((error) => {
+                            console.error('Error fetching visitor data:', error);
+                            alert('Error fetching visitor data. Please try again later.');
+                        });
                 }
             })
             .catch((error) => {
-                console.error('Error fetching data:', error);
-                alert('Error fetching child name. Please try again later.');
+                console.error('Error fetching parent data:', error);
+                alert('Error fetching parent data. Please try again later.');
             });
     } else {
         alert('Please enter a phone number.');
     }
 }
 
-function signOut(event) {
-    event.preventDefault(); // Prevent the form from submitting normally
-
-    const childList = document.getElementById('childList');
-    if (childList.children.length > 0) {
-        // Show the pop-up message first
-        alert('Thank you! Welcome again, see you next time!');
-
-        // Display the success notification
-        const notification = document.getElementById('notification');
-        notification.style.display = 'block';
-        notification.classList.add('show');
-
-        // Clear the form fields
-        const form = document.getElementById('signOutForm');
-        form.reset();
-        document.getElementById('childNameContainer').style.display = 'none';
-
-        // Hide the notification after a few seconds
-        setTimeout(() => {
-            notification.style.display = 'none';
-        }, 3000);
-    } else {
-        alert('Please fetch the child name first.');
-    }
-}
-
 // Attach the click event to the fetch button
-document.getElementById('fetchButton').addEventListener('click', fetchChildName);
+document.getElementById('fetchButton').addEventListener('click', fetchData);
