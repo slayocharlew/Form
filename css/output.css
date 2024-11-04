@@ -1,0 +1,173 @@
+/* General reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Arial', sans-serif;
+}
+
+/* Dark background with slight overlay */
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background: url('../picture/IMG_2099.jpg') no-repeat center center fixed;
+    background-size: cover;
+    position: relative;
+}
+
+
+
+body::before {
+    content: "";
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    z-index: -1;
+}
+
+/* Form wrapper with 3D effect */
+.form_wrapper {
+    background: rgba(255, 255, 255, 0.9);
+    padding: 30px;
+    border-radius: 15px;
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2), 0 15px 30px rgba(255, 255, 255, 0.1) inset;
+    backdrop-filter: blur(10px);
+    width: 350px;
+    max-width: 100%;
+    transform: perspective(600px) rotateX(5deg) rotateY(5deg);
+    transition: transform 0.3s ease-in-out;
+}
+
+.form_wrapper:hover {
+    transform: perspective(600px) rotateX(0) rotateY(0);
+}
+
+/* Title styling */
+.title_container h2 {
+    font-size: 24px;
+    text-align: center;
+    color: #333;
+    margin-bottom: 20px;
+    font-weight: bold;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
+}
+
+/* Input field styling */
+.input_field {
+    margin-bottom: 20px;
+}
+
+.input_field label {
+    font-size: 14px;
+    color: #333;
+}
+
+.input_field input {
+    width: 100%;
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    background: rgba(255, 255, 255, 0.9);
+    font-size: 16px;
+    color: #333;
+    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+    transition: box-shadow 0.3s ease, transform 0.2s ease;
+}
+
+.input_field input:focus {
+    box-shadow: 0 0 8px rgba(76, 175, 80, 0.4), inset 0 1px 2px rgba(255, 255, 255, 0.4);
+    outline: none;
+    transform: scale(1.03);
+}
+
+/* Button styling */
+button {
+    width: 100%;
+    padding: 12px;
+    border: none;
+    border-radius: 8px;
+    background: linear-gradient(45deg, #4caf50, #45a049);
+    color: #fff;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.3s ease, transform 0.2s ease;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+button:hover {
+    background: linear-gradient(45deg, #45a049, #4caf50);
+    transform: scale(1.05);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+/* Notification styling */
+.notification {
+    margin-top: 20px;
+    padding: 10px;
+    background: rgba(76, 175, 80, 0.8);
+    color: #fff;
+    border-radius: 8px;
+    text-align: center;
+    font-size: 14px;
+    opacity: 0;
+    animation: fadeIn 0.5s forwards;
+}
+
+/* Keyframes for notification animation */
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+/* Styling fetched details */
+#visitorDetails, #childNameContainer {
+    margin-top: 20px;
+    padding: 15px;
+    background: rgba(240, 240, 240, 0.9);
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+}
+
+#visitorDetails p, #childNameContainer ul {
+    font-size: 15px;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+/* 3D list styling for child names */
+#childList {
+    list-style: none;
+    padding: 0;
+}
+
+#childList li {
+    background: #e0f7fa;
+    padding: 8px;
+    margin: 5px 0;
+    border-radius: 5px;
+    color: #00796b;
+    box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+    .form_wrapper {
+        width: 90%;
+        padding: 20px;
+    }
+
+    .title_container h2 {
+        font-size: 20px;
+    }
+
+    .input_field input, button {
+        font-size: 14px;
+        padding: 10px;
+    }
+}
