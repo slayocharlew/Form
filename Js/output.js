@@ -47,19 +47,19 @@ function fetchData() {
                             if (visitorSnapshot.exists()) {
                                 const visitorData = visitorSnapshot.val();
 
-                                // Check and log the visitorData to verify structure
+                                // Log the full data for inspection
                                 console.log('Fetched Visitor Data:', visitorData);
 
-                                // Access the keys based on the actual structure
-                                const schoolName = visitorData.schoolName || visitorData.school || "Not Available";
-                                const guiderName = visitorData.guiderName || visitorData.teacherName || "Not Available";
-                                const numberOfStudents = visitorData.numberOfStudents || visitorData.students || "Not Available";
+                                // Extract the required fields (Guider Name, Number of Students, School Name)
+                                const schoolName = visitorData.schoolName || "School Name not available";
+                                const guiderName = visitorData.guiderName || "Guider Name not available";
+                                const numberOfStudents = visitorData.numberOfStudents || "Number of Students not available";
 
                                 // Display the fetched details
                                 document.getElementById('visitorDetails').innerHTML = `
-                                    <p>School Name: ${schoolName}</p>
-                                    <p>Guider Name: ${guiderName}</p>
-                                    <p>Number of Students: ${numberOfStudents}</p>
+                                    <p><strong>School Name:</strong> ${schoolName}</p>
+                                    <p><strong>Guider Name:</strong> ${guiderName}</p>
+                                    <p><strong>Number of Students:</strong> ${numberOfStudents}</p>
                                 `;
                                 document.getElementById('childNameContainer').style.display = 'none';
                                 document.getElementById('visitorDetails').style.display = 'block';
