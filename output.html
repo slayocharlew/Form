@@ -12,8 +12,6 @@
             <h2>Fetch Details</h2>
         </div>
 
-
-
         <form id="signOutForm">
             <div class="input_field">
                 <label for="parentPhone">Phone Number</label>
@@ -25,16 +23,18 @@
             <div id="childNameContainer" style="display: none;">
                 <label>Children Names:</label>
                 <ul id="childList"></ul>
+                <button type="button" id="confirmParent" style="display: none;">Confirm</button> <!-- Confirmation Button -->
             </div>
 
             <!-- Visitor Details Container -->
             <div id="visitorDetails" style="display: none;">
-                <!-- This section will display visitor details -->
+                <!-- Display visitor details here -->
+                <button type="button" id="confirmVisitor" style="display: none;">Confirm</button> <!-- Confirmation Button -->
             </div>
         </form>
         <div id="notification" class="notification" style="display: none;">Details fetched successfully!</div>
     </div>
 
-    <script type="module" src="Js/output.js"></script>
+    <script type="module" src="js/output.js"></script>
 </body>
 </html>

@@ -37,8 +37,10 @@ function fetchData() {
                         childList.appendChild(listItem);
                     });
 
+                    // Show the child name container and confirmation button
                     document.getElementById('childNameContainer').style.display = 'block';
                     document.getElementById('visitorDetails').style.display = 'none';
+                    document.getElementById('confirmParent').style.display = 'inline-block'; // Show confirm button for parent
                 } else {
                     // If no parent details are found, check the "visitor_guider_or_teacher" node
                     const visitorRef = ref(database, 'visitor_guider_or_teacher/' + phoneNumber);
@@ -47,15 +49,12 @@ function fetchData() {
                             if (visitorSnapshot.exists()) {
                                 const visitorData = visitorSnapshot.val();
 
-                                // Log the full data for inspection
-                                console.log('Fetched Visitor Data:', visitorData);
-
-                                // Extract the required fields (Guider Name, Number of Students, School Name)
+                                // Extract the required fields
                                 const schoolName = visitorData.schoolName || "School Name not available";
                                 const guiderName = visitorData.guiderName || "Guider Name not available";
                                 const numberOfStudents = visitorData.numberOfStudents || "Number of Students not available";
 
-                                // Display the fetched details
+                                // Display the visitor details
                                 document.getElementById('visitorDetails').innerHTML = `
                                     <p><strong>School Name:</strong> ${schoolName}</p>
                                     <p><strong>Guider Name:</strong> ${guiderName}</p>
@@ -63,6 +62,7 @@ function fetchData() {
                                 `;
                                 document.getElementById('childNameContainer').style.display = 'none';
                                 document.getElementById('visitorDetails').style.display = 'block';
+                                document.getElementById('confirmVisitor').style.display = 'inline-block'; // Show confirm button for visitor
                             } else {
                                 alert('No details found for this phone number.');
                             }
@@ -82,5 +82,23 @@ function fetchData() {
     }
 }
 
-// Attach the click event to the fetch button
+// Confirmation button action
+function confirmAction() {
+    alert("Thank you! Confirmation successful.");
+
+    // Clear the form fields
+    document.getElementById('parentPhone').value = '';
+
+    // Hide the fetched details sections
+    document.getElementById('childNameContainer').style.display = 'none';
+    document.getElementById('visitorDetails').style.display = 'none';
+
+    // Hide the confirmation buttons
+    document.getElementById('confirmParent').style.display = 'none';
+    document.getElementById('confirmVisitor').style.display = 'none';
+}
+
+// Attach events
 document.getElementById('fetchButton').addEventListener('click', fetchData);
+document.getElementById('confirmParent').addEventListener('click', confirmAction);
+document.getElementById('confirmVisitor').addEventListener('click', confirmAction);
