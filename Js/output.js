@@ -50,9 +50,9 @@ function fetchData() {
                                 const visitorData = visitorSnapshot.val();
 
                                 // Extract the required fields
-                                const schoolName = visitorData.schoolName || "School Name not available";
-                                const guiderName = visitorData.guiderName || "Guider Name not available";
-                                const numberOfStudents = visitorData.numberOfStudents || "Number of Students not available";
+                                const schoolName = visitorData.schoolName;
+                                const guiderName = visitorData.guiderName;
+                                const numberOfStudents = visitorData.numberOfStudents;
 
                                 // Display the visitor details
                                 document.getElementById('visitorDetails').innerHTML = `
