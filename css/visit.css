@@ -1,4 +1,11 @@
-/* Background image and basic body styling */
+/* Basic reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
 body {
     font-family: 'Arial', sans-serif;
     background: url('../picture/IMG_2339.jpg') no-repeat center center/cover;
@@ -9,136 +16,176 @@ body {
     margin: 0;
 }
 
-body.dark-mode::before {
-    content: "";
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.6); 
-    z-index: -1;
+/* Dark Mode Background */
+body.dark-mode {
+    background-color: #1d1f20;
+    color: #e8e8e8;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    padding: 20px; /* Added padding for smaller screens */
 }
 
-/* Form wrapper styling */
-
+/* Form Wrapper with 3D Shadow */
 .form_wrapper {
-    background: rgba(255, 255, 255, 0.7); 
-    padding: 20px;
+    max-width: 500px;
+    width: 100%;
+    background-color: rgba(30, 30, 30, 0.8);
+    padding: 40px;
     border-radius: 15px;
-    border: 2px solid rgba(255, 255, 255, 0.4);
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
-    backdrop-filter: blur(10px);
-    width: 350px;
-    max-width: 100%;
-    box-sizing: border-box;
-    transition: transform 0.3s ease;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3), 0 0 15px rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(8px);
+    transform: perspective(800px) rotateX(10deg);
+    transition: transform 0.4s ease;
 }
 
+/* Hover 3D Tilt Effect */
 .form_wrapper:hover {
-    transform: scale(1.02); 
-    box-shadow: 0 12px 36px rgba(0, 0, 0, 0.3);
+    transform: perspective(800px) rotateX(0);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
 }
 
-.title_container {
+/* Title Styling */
+.title_container h2 {
+    font-size: 1.8em;
     margin-bottom: 20px;
+    color: #ffeb3b;
     text-align: center;
-    font-size: 24px;
-    font-weight: bold;
-    color: #333;
+    text-shadow: 1px 1px 4px #333;
+    animation: fadeIn 1s ease forwards;
 }
 
+/* Input Fields Styling */
 .input_field {
     margin-bottom: 20px;
     position: relative;
 }
 
+.input_field label {
+    font-size: 1em;
+    color: #ffeb3b;
+}
+
 .input_field input {
     width: 100%;
     padding: 10px;
-    border: 1px solid rgba(0, 0, 0, 0.1);
+    margin-top: 5px;
+    background-color: #333;
+    color: #fff;
+    border: 1px solid #555;
     border-radius: 8px;
-    background: rgba(255, 255, 255, 0.5);
-    color: #333;
-    font-size: 14px;
-    transition: all 0.3s ease;
-    box-sizing: border-box;
+    outline: none;
+    font-size: 1em;
+    transition: box-shadow 0.3s ease;
 }
 
+/* 3D Input Field Focus */
 .input_field input:focus {
-    border-color: #4CAF50;
-    background: rgba(255, 255, 255, 0.8);
-    box-shadow: 0 0 5px rgba(76, 175, 80, 0.5);
+    box-shadow: 0 0 10px #ffeb3b;
 }
 
-/* Button styling */
+/* Button Styling */
 button {
     width: 100%;
     padding: 12px;
-    background-color: #4CAF50;
-    color: white;
+    background-color: #ffeb3b;
+    color: #1d1f20;
     border: none;
-    border-radius: 8px;
-    font-size: 16px;
+    border-radius: 10px;
+    font-size: 1.2em;
+    font-weight: bold;
     cursor: pointer;
-    transition: all 0.3s ease;
+    transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
+/* Button Hover Effect */
 button:hover {
-    background-color: #45a049;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    background-color: #fdd835;
+    transform: scale(1.05);
+    box-shadow: 0 0 15px rgba(255, 235, 59, 0.6);
 }
 
-/* Notification styling */
+/* Button Press Animation */
+button:active {
+    transform: scale(0.95);
+}
+
+/* Notification Styling */
 .notification {
-    margin-top: 15px;
-    color: green;
     display: none;
+    padding: 10px;
+    background-color: #4caf50;
+    color: white;
+    border-radius: 5px;
+    text-align: center;
+    margin-top: 20px;
+    animation: slideIn 0.5s ease;
 }
 
-/* Responsive design */
+/* Fade In Animation */
+@keyframes fadeIn {
+    0% { opacity: 0; transform: translateY(-10px); }
+    100% { opacity: 1; transform: translateY(0); }
+}
+
+/* Slide In Animation for Notification */
+@keyframes slideIn {
+    from { transform: translateY(20px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+}
+
+/* Floating Form Animation */
+@keyframes float {
+    0%, 100% { transform: translateY(-5px); }
+    50% { transform: translateY(5px); }
+}
+
+.form_wrapper {
+    animation: float 3s ease-in-out infinite;
+}
+
+/* Responsive Adjustments */
 @media (max-width: 768px) {
     .form_wrapper {
-        width: 90%; /* Expand to take more space */
-        padding: 15px;
+        padding: 30px;
+        transform: none; /* Remove 3D effect on smaller screens */
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     }
 
-    .title_container {
-        font-size: 20px; /* Adjust the font size for smaller screens */
+    .title_container h2 {
+        font-size: 1.6em;
     }
 
-    .input_field {
-        margin-bottom: 15px; /* Adjust spacing */
-    }
-
-    .input_field input {
-        padding: 8px; /* Adjust padding */
-        font-size: 13px; /* Smaller font for smaller screens */
+    .input_field label {
+        font-size: 0.9em;
     }
 
     button {
-        padding: 10px;
-        font-size: 14px; /* Smaller font for the button */
+        font-size: 1.1em;
     }
 }
 
 @media (max-width: 480px) {
     .form_wrapper {
-        width: 95%; /* Use almost full width */
-        padding: 10px; /* Reduced padding for small devices */
+        padding: 20px;
+        border-radius: 10px;
     }
 
-    .title_container {
-        font-size: 18px; /* Smaller font size for very small screens */
+    .title_container h2 {
+        font-size: 1.4em;
     }
 
-    .input_field input {
-        padding: 7px; /* Compact padding for mobile */
-        font-size: 12px; /* Smaller font */
+    .input_field label {
+        font-size: 0.85em;
     }
 
     button {
+        font-size: 1em;
+    }
+
+    /* Adjust input fields to avoid crowding */
+    .input_field input {
         padding: 8px;
-        font-size: 13px; /* Even smaller font */
     }
 }

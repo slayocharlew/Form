@@ -68,5 +68,18 @@ function submitForm(event) {
     }
 }
 
+document.getElementById('schoolVisitForm').addEventListener('submit', function (event) {
+    event.preventDefault();
+
+    // Simulate form submission success
+    document.getElementById('notification').style.display = 'block';
+
+    // Hide the notification after a few seconds
+    setTimeout(() => {
+        document.getElementById('notification').style.display = 'none';
+    }, 3000);
+});
+
+
 // Attach the submit event to the form
 document.getElementById('schoolVisitForm').addEventListener('submit', submitForm);
