@@ -2,7 +2,7 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-app.js";
 import { getDatabase, ref, set } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-database.js";
 
-// Your web app's Firebase configuration
+// Firebase configuration
 const firebaseConfig = {
     apiKey: "AIzaSyCNbSygpMwn5groYbfL1vGxsHqvbDOnFOs",
     authDomain: "attendance-scan-c7af7.firebaseapp.com",
@@ -17,69 +17,61 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const database = getDatabase(app);
 
-// Function to save visitor data to Firebase
-function saveVisitorData(schoolName, guiderName, phoneNumber, numberOfStudents, dateOfVisit) {
-    const visitorRef = ref(database, 'visitor_guider_or_teacher/' + phoneNumber);
-    set(visitorRef, {
-        schoo_lName: schoolName,
-        guider_Name: guiderName,
-        phone_Number: phoneNumber,
-        number_Of_Students: numberOfStudents,
-        date_Of_Visit: dateOfVisit
-    })
-    .then(() => {
-        console.log('Data saved successfully to visitor_guider_or_teacher node!');
-    })
-    .catch((error) => {
-        console.error('Error saving data:', error);
-    });
+// Function to save visitor data
+function saveVisitorData(companyName, guiderName, phoneNumber, numberOfVisitors) {
+    const today = new Date();
+    const year = today.getFullYear(); // e.g., 2024
+    const month = today.toLocaleString('default', { month: 'long' }); // e.g., October
+    const date = today.getDate(); // e.g., 22
+
+    const visitorData = {
+        company_name: companyName,
+        guider_name: guiderName,
+        phone_number: phoneNumber,
+        number_of_visitors: numberOfVisitors
+    };
+
+    // Generate a unique ID for the visitor entry
+    const visitorID = `${phoneNumber}-${Date.now()}`;
+
+    const visitorRef = ref(database, `visitor_guider_or_teacher/${year}/${month}/${date}/${visitorID}`);
+    set(visitorRef, visitorData)
+        .then(() => console.log("Visitor data saved successfully."))
+        .catch((error) => console.error("Error saving visitor data:", error));
 }
 
 // Function to handle form submission
-function submitForm(event) {
+function submitVisitorForm(event) {
     event.preventDefault();
 
-    const schoolName = document.getElementById('schoolName').value.trim();
+    const companyName = document.getElementById('companyName').value.trim();
     const guiderName = document.getElementById('guiderName').value.trim();
     const phoneNumber = document.getElementById('phoneNumber').value.trim();
-    const numberOfStudents = document.getElementById('numberOfStudents').value.trim();
-    const dateOfVisit = document.getElementById('dateOfVisit').value;
+    const numberOfVisitors = document.getElementById('numberOfVisitors').value.trim();
 
-    if (schoolName && guiderName && phoneNumber && numberOfStudents && dateOfVisit) {
-        // Save data to Firebase
-        saveVisitorData(schoolName, guiderName, phoneNumber, numberOfStudents, dateOfVisit);
-
-        // Display the notification
-        const notification = document.getElementById('notification');
-        notification.style.display = 'block';
-        notification.classList.add('show');
-
-        // Reset the form fields
-        const form = document.getElementById('schoolVisitForm');
-        form.reset();
-
-        // Optionally hide the notification after a few seconds
-        setTimeout(() => {
-            notification.style.display = 'none';
-        }, 3000);
-    } else {
-        console.error('Please fill in all the required fields.');
-        alert('Please fill in all the required fields.');
+    // Validate input
+    if (!companyName || !guiderName || !phoneNumber || !numberOfVisitors) {
+        alert("Please fill in all required fields.");
+        return;
     }
+
+    // Save data to Firebase
+    saveVisitorData(companyName, guiderName, phoneNumber, numberOfVisitors);
+
+    // Display the notification
+    const notification = document.getElementById('notification');
+    notification.style.display = 'block';
+    notification.classList.add('show');
+
+    // Clear the form fields
+    const form = document.getElementById('schoolVisitForm');
+    form.reset();
+
+    // Optionally hide the notification after a few seconds
+    setTimeout(() => {
+        notification.style.display = 'none';
+    }, 3000);
 }
 
-document.getElementById('schoolVisitForm').addEventListener('submit', function (event) {
-    event.preventDefault();
-
-    // Simulate form submission success
-    document.getElementById('notification').style.display = 'block';
-
-    // Hide the notification after a few seconds
-    setTimeout(() => {
-        document.getElementById('notification').style.display = 'none';
-    }, 3000);
-});
-
-
 // Attach the submit event to the form
-document.getElementById('schoolVisitForm').addEventListener('submit', submitForm);
+document.getElementById('schoolVisitForm').addEventListener('submit', submitVisitorForm);

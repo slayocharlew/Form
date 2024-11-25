@@ -1,6 +1,6 @@
 // Import the necessary Firebase functions
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-app.js";
-import { getDatabase, ref, set } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-database.js";
+import { getDatabase, ref, set, get, update } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-database.js";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
@@ -39,18 +39,21 @@ function addChild() {
 }
 
 function saveParentData(parentName, parentPhone, children) {
-    const parentRef = ref(database, 'parents/' + parentPhone);
-    set(parentRef, {
+    const today = new Date();
+    const year = today.getFullYear(); // e.g., 2024
+    const month = today.toLocaleString('default', { month: 'long' }); // e.g., October
+    const date = today.getDate(); // e.g., 22
+
+    const parentData = {
         name: parentName,
         phone: parentPhone,
         children: children
-    })
-    .then(() => {
-        console.log('Data saved successfully!');
-    })
-    .catch((error) => {
-        console.error('Error saving data:', error);
-    });
+    };
+
+    const parentRef = ref(database, `parents/${year}/${month}/${date}/${parentPhone}`);
+    set(parentRef, parentData)
+        .then(() => console.log("Parent data saved successfully."))
+        .catch((error) => console.error("Error saving parent data:", error));
 }
 
 function submitForm(event) {
