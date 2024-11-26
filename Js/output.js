@@ -21,8 +21,14 @@ function fetchData() {
     const phoneNumber = document.getElementById('parentPhone').value.trim();
 
     if (phoneNumber) {
-        // Check if the phone number belongs to a parent
-        const parentRef = ref(database, 'parents/' + phoneNumber);
+        // Get current year, month, and date
+        const today = new Date();
+        const year = today.getFullYear();
+        const month = today.toLocaleString('default', { month: 'long' });
+        const date = today.getDate();
+
+        // Fetch parent details
+        const parentRef = ref(database, `parents/${year}/${month}/${date}/${phoneNumber}`);
         get(parentRef)
             .then((snapshot) => {
                 if (snapshot.exists()) {
@@ -40,37 +46,41 @@ function fetchData() {
                     // Show the child name container and confirmation button
                     document.getElementById('childNameContainer').style.display = 'block';
                     document.getElementById('visitorDetails').style.display = 'none';
-                    document.getElementById('confirmParent').style.display = 'inline-block'; // Show confirm button for parent
+                    document.getElementById('confirmParent').style.display = 'inline-block';
                 } else {
-                    // If no parent details are found, check the "visitor_guider_or_teacher" node
-                    const visitorRef = ref(database, 'visitor_guider_or_teacher/' + phoneNumber);
-                    get(visitorRef)
-                        .then((visitorSnapshot) => {
-                            if (visitorSnapshot.exists()) {
-                                const visitorData = visitorSnapshot.val();
+                    // If no parent details are found, fetch visitor details
+                    const visitorRef = ref(database, `visitor_guider_or_teacher/${year}/${month}/${date}`);
+                    get(visitorRef).then((visitorSnapshot) => {
+                        if (visitorSnapshot.exists()) {
+                            let visitorFound = false;
 
-                                // Extract the required fields
-                                const schoolName = visitorData.schoolName;
-                                const guiderName = visitorData.guiderName;
-                                const numberOfStudents = visitorData.numberOfStudents;
+                            // Loop through visitors to find the matching phone number
+                            visitorSnapshot.forEach((childSnapshot) => {
+                                const visitorData = childSnapshot.val();
+                                if (visitorData.phone_number === phoneNumber) {
+                                    visitorFound = true;
 
-                                // Display the visitor details
-                                document.getElementById('visitorDetails').innerHTML = `
-                                    <p><strong>School Name:</strong> ${schoolName}</p>
-                                    <p><strong>Guider Name:</strong> ${guiderName}</p>
-                                    <p><strong>Number of Students:</strong> ${numberOfStudents}</p>
-                                `;
-                                document.getElementById('childNameContainer').style.display = 'none';
-                                document.getElementById('visitorDetails').style.display = 'block';
-                                document.getElementById('confirmVisitor').style.display = 'inline-block'; // Show confirm button for visitor
-                            } else {
+                                    // Populate visitor details
+                                    document.getElementById('visitorCompanyName').textContent = visitorData.company_name || "Not available";
+                                    document.getElementById('visitorGuiderName').textContent = visitorData.guider_name || "Not available";
+                                    document.getElementById('visitorCount').textContent = visitorData.number_of_visitors || "Not available";
+
+                                    document.getElementById('childNameContainer').style.display = 'none';
+                                    document.getElementById('visitorDetails').style.display = 'block';
+                                    document.getElementById('confirmVisitor').style.display = 'inline-block';
+                                }
+                            });
+
+                            if (!visitorFound) {
                                 alert('No details found for this phone number.');
                             }
-                        })
-                        .catch((error) => {
-                            console.error('Error fetching visitor data:', error);
-                            alert('Error fetching visitor data. Please try again later.');
-                        });
+                        } else {
+                            alert('No details found for this phone number.');
+                        }
+                    }).catch((error) => {
+                        console.error('Error fetching visitor data:', error);
+                        alert('Error fetching visitor data. Please try again later.');
+                    });
                 }
             })
             .catch((error) => {

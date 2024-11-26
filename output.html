@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sign-Out Form</title>
+    <title>Fetch Details</title>
     <link rel="stylesheet" href="css/output.css">
     <link rel="icon" type="image/x-icon" href="/picture/logo2.png">
 </head>
@@ -22,16 +22,21 @@
 
             <!-- Parent Details Container -->
             <div id="childNameContainer" style="display: none;">
-                <label>Children Names:</label>
+                <label>Children Names</label>
                 <ul id="childList"></ul>
-                <button type="button" id="confirmParent" style="display: none;">Confirm</button> <!-- Confirmation Button -->
+                <button type="button" id="confirmParent" style="display: none;">Confirm Parent</button>
             </div>
+
             <!-- Visitor Details Container -->
-            <div id="visitorDetails" style="display: none;">
-                <!-- Display visitor details here -->
-                <button type="button" id="confirmVisitor" style="display: none;">Confirm</button> <!-- Confirmation Button -->
+            <ul id="visitorDetails" style="display: none;">
+                <label>Visitor Details</label><br><br>
+                <ul id="visitlist"><p><strong>Company/School Name:</strong> <span id="visitorCompanyName"></span></p></ul>
+                <ul id="visitlist"><p><strong>Guider Name:</strong> <span id="visitorGuiderName"></span></p></ul>
+                <ul id="visitlist"><p><strong>Number of Visitors:</strong> <span id="visitorCount"></span></p></ul>
+                <button type="button" id="confirmVisitor" style="display: none;">Confirm Visitor</button>
             </div>
         </form>
+
         <div id="notification" class="notification" style="display: none;">Details fetched successfully!</div>
     </div>
 
