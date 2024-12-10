@@ -40,6 +40,12 @@ function saveVisitorData(companyName, guiderName, phoneNumber, numberOfVisitors)
         .catch((error) => console.error("Error saving visitor data:", error));
 }
 
+//Validate form number format
+function isValidPhoneNumber(phoneNumber) {
+    const phoneRegex = /^0[67]\d{8}$/; //Matches 07XXXXXXXX or 06XXXXXXXX
+    return phoneRegex.test(phoneNumber);
+}
+
 // Function to handle form submission
 function submitVisitorForm(event) {
     event.preventDefault();
@@ -52,6 +58,12 @@ function submitVisitorForm(event) {
     // Validate input
     if (!companyName || !guiderName || !phoneNumber || !numberOfVisitors) {
         alert("Please fill in all required fields.");
+        return;
+    }
+
+    //validate phone number format
+    if (!isValidPhoneNumber(phoneNumber)) {
+        alert("please enter a valid phone number in the format: 07XXXXXXXXX or 06XXXXXXXX (10 digit).")
         return;
     }
 

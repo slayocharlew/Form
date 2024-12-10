@@ -38,6 +38,12 @@ function addChild() {
     childrenContainer.appendChild(newChild);
 }
 
+// Validate phone number format
+function isValidPhoneNumber(phoneNumber) {
+    const phoneRegex = /^0[67]\d{8}$/; // Matches 07XXXXXXXX or 06XXXXXXXX
+    return phoneRegex.test(phoneNumber);
+}
+
 function saveParentData(parentName, parentPhone, children) {
     const today = new Date();
     const year = today.getFullYear(); // e.g., 2024
@@ -59,13 +65,19 @@ function saveParentData(parentName, parentPhone, children) {
 function submitForm(event) {
     event.preventDefault();
 
-    const parentName = document.getElementById('parentName').value;
-    const parentPhone = document.getElementById('parentPhone').value;
+    const parentName = document.getElementById('parentName').value.trim();
+    const parentPhone = document.getElementById('parentPhone').value.trim();
     const children = Array.from(document.querySelectorAll('.child')).map((child) => {
-        const name = child.querySelector(`[name="childName[]"]`).value;
-        const age = child.querySelector(`[name="childAge[]"]`).value;
+        const name = child.querySelector(`[name="childName[]"]`).value.trim();
+        const age = child.querySelector(`[name="childAge[]"]`).value.trim();
         return { name, age };
     });
+
+    // Validate phone number format
+    if (!isValidPhoneNumber(parentPhone)) {
+        alert("Please enter a valid phone number in the format: 07XXXXXXXX or 06XXXXXXXX (10 digits).");
+        return;
+    }
 
     // Save data to Firebase
     saveParentData(parentName, parentPhone, children);
