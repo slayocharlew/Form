@@ -24,11 +24,15 @@ function saveVisitorData(companyName, guiderName, phoneNumber, numberOfVisitors)
     const month = today.toLocaleString('default', { month: 'long' }); // e.g., October
     const date = today.getDate(); // e.g., 22
 
+    // Get current in-time (hh:mm:ss format)
+    const inTime = today.toLocaleTimeString();
+
     const visitorData = {
         company_name: companyName,
         guider_name: guiderName,
         phone_number: phoneNumber,
-        number_of_visitors: numberOfVisitors
+        number_of_visitors: numberOfVisitors,
+        in_time: inTime // Add in-time
     };
 
     // Generate a unique ID for the visitor entry
@@ -36,13 +40,13 @@ function saveVisitorData(companyName, guiderName, phoneNumber, numberOfVisitors)
 
     const visitorRef = ref(database, `visitor_guider_or_teacher/${year}/${month}/${date}/${visitorID}`);
     set(visitorRef, visitorData)
-        .then(() => console.log("Visitor data saved successfully."))
+        .then(() => console.log("Visitor data saved successfully with in-time."))
         .catch((error) => console.error("Error saving visitor data:", error));
 }
 
-//Validate form number format
+// Validate phone number format
 function isValidPhoneNumber(phoneNumber) {
-    const phoneRegex = /^0[67]\d{8}$/; //Matches 07XXXXXXXX or 06XXXXXXXX
+    const phoneRegex = /^0[67]\d{8}$/; // Matches 07XXXXXXXX or 06XXXXXXXX
     return phoneRegex.test(phoneNumber);
 }
 
@@ -61,9 +65,9 @@ function submitVisitorForm(event) {
         return;
     }
 
-    //validate phone number format
+    // Validate phone number format
     if (!isValidPhoneNumber(phoneNumber)) {
-        alert("please enter a valid phone number in the format: 07XXXXXXXXX or 06XXXXXXXX (10 digit).")
+        alert("Please enter a valid phone number in the format: 07XXXXXXXX or 06XXXXXXXX (10 digits).");
         return;
     }
 

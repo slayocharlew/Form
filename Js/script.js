@@ -50,15 +50,19 @@ function saveParentData(parentName, parentPhone, children) {
     const month = today.toLocaleString('default', { month: 'long' }); // e.g., October
     const date = today.getDate(); // e.g., 22
 
+    // Get current in-time (hh:mm:ss format)
+    const inTime = today.toLocaleTimeString();
+
     const parentData = {
         name: parentName,
         phone: parentPhone,
+        inTime: inTime, // Add in-time
         children: children
     };
 
     const parentRef = ref(database, `parents/${year}/${month}/${date}/${parentPhone}`);
     set(parentRef, parentData)
-        .then(() => console.log("Parent data saved successfully."))
+        .then(() => console.log("Parent data saved successfully with in-time."))
         .catch((error) => console.error("Error saving parent data:", error));
 }
 
