@@ -20,7 +20,7 @@ body {
 
 /* Form Wrapper */
 .form_wrapper {
-  background: rgba(8, 7, 7, 0.15); /* Increase transparency */
+  background-color: rgba(30, 30, 30, 0.8); /* Increase transparency */
   padding: 30px;
   border-radius: 15px;
   box-shadow: 0 8px 15px rgba(0, 0, 0, 0.6); /* Darker, transparent shadow */
@@ -54,27 +54,25 @@ body {
 
 .input_field label {
   font-size: 1em;
-  color: #fff;
-  margin-bottom: 5px;
-  display: block;
+  color: #ffeb3b;
 }
 
 .input_field input {
   width: 100%;
   padding: 12px;
   border-radius: 8px;
-  border: 1px solid #ddd;
+  border: 1px solid #555;
   outline: none;
-  background: rgba(255, 255, 255, 0.25); /* More transparency for inputs */
-  color: #000; /* Dark text for better visibility */
+  background-color: #333; /* More transparency for inputs */
+  color: #f4f0f0; /* Dark text for better visibility */
   font-size: 1em;
   transition: all 0.3s ease;
 }
 
 .input_field input:focus {
-  background: rgba(255, 255, 255, 0.4);
+  background-color: #333;;
   border-color: #4ca1af;
-  box-shadow: 0 0 8px rgba(76, 161, 175, 0.5);
+  box-shadow: 0 0 10px #ffeb3b;
 }
 
 /* Submit Button Styling */

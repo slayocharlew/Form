@@ -1,4 +1,4 @@
-// Import the necessary Firebase functions
+// Import thf necessary Firebase functions
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-app.js";
 import { getDatabase, ref, set, get, update } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-database.js";
 
