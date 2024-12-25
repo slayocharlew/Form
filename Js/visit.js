@@ -18,20 +18,20 @@ const app = initializeApp(firebaseConfig);
 const database = getDatabase(app);
 
 // Function to save visitor data
-function saveVisitorData(companyName, guiderName, phoneNumber, numberOfVisitors) {
+function saveVisitorData(companyOrSchoolName, guiderOrTeacherName, phoneNumber, numberOfVisitorOrStudent) {
     const today = new Date();
     const year = today.getFullYear(); // e.g., 2024
-    const month = today.toLocaleString('default', { month: 'long' }); // e.g., October
-    const date = today.getDate(); // e.g., 22
+    const month = today.toLocaleString('default', { month: 'long' }); // e.g., December
+    const date = today.getDate(); // e.g., 25
 
     // Get current in-time (hh:mm:ss format)
     const inTime = today.toLocaleTimeString();
 
     const visitorData = {
-        company_name: companyName,
-        guider_name: guiderName,
+        company_or_school_name: companyOrSchoolName, // Updated to remove special characters
+        guider_or_teacher_name: guiderOrTeacherName, // Updated to remove special characters
         phone_number: phoneNumber,
-        number_of_visitors: numberOfVisitors,
+        number_of_visitor_or_student: numberOfVisitorOrStudent, // Updated to remove special characters
         in_time: inTime // Add in-time
     };
 
@@ -54,13 +54,13 @@ function isValidPhoneNumber(phoneNumber) {
 function submitVisitorForm(event) {
     event.preventDefault();
 
-    const companyName = document.getElementById('companyName').value.trim();
-    const guiderName = document.getElementById('guiderName').value.trim();
+    const companyOrSchoolName = document.getElementById('companyName').value.trim();
+    const guiderOrTeacherName = document.getElementById('guiderName').value.trim();
     const phoneNumber = document.getElementById('phoneNumber').value.trim();
-    const numberOfVisitors = document.getElementById('numberOfVisitors').value.trim();
+    const numberOfVisitorOrStudent = document.getElementById('numberOfVisitors').value.trim();
 
     // Validate input
-    if (!companyName || !guiderName || !phoneNumber || !numberOfVisitors) {
+    if (!companyOrSchoolName || !guiderOrTeacherName || !phoneNumber || !numberOfVisitorOrStudent) {
         alert("Please fill in all required fields.");
         return;
     }
@@ -72,7 +72,7 @@ function submitVisitorForm(event) {
     }
 
     // Save data to Firebase
-    saveVisitorData(companyName, guiderName, phoneNumber, numberOfVisitors);
+    saveVisitorData(companyOrSchoolName, guiderOrTeacherName, phoneNumber, numberOfVisitorOrStudent);
 
     // Display the notification
     const notification = document.getElementById('notification');
