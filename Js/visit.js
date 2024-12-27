@@ -18,29 +18,45 @@ const app = initializeApp(firebaseConfig);
 const database = getDatabase(app);
 
 // Function to save visitor data
-function saveVisitorData(companyName, guiderName, phoneNumber, numberOfVisitors) {
+function saveVisitorData(registrationType, companyOrSchoolName, guiderOrTeacherName, phoneNumber, numberOfPeople) {
     const today = new Date();
     const year = today.getFullYear(); // e.g., 2024
-    const month = today.toLocaleString('default', { month: 'long' }); // e.g., October
-    const date = today.getDate(); // e.g., 22
+    const month = today.toLocaleString('default', { month: 'long' }); // e.g., December
+    const date = today.getDate(); // e.g., 25
 
     // Get current in-time (hh:mm:ss format)
     const inTime = today.toLocaleTimeString();
 
-    const visitorData = {
-        company_name: companyName,
-        guider_name: guiderName,
+    // Prepare data based on the registration type
+    let visitorData = {
+        date: `${year}-${month}-${date}`, // Add date field
         phone_number: phoneNumber,
-        number_of_visitors: numberOfVisitors,
-        in_time: inTime // Add in-time
+        in_time: inTime
     };
+
+    if (registrationType === "school visit") {
+        visitorData = {
+            ...visitorData, // Include common fields
+            school_name: companyOrSchoolName, // For school visits
+            teacher_name: guiderOrTeacherName,
+            number_of_students: numberOfPeople
+        };
+    } else if (registrationType === "guest visitor") {
+        visitorData = {
+            ...visitorData, // Include common fields
+            company_name: companyOrSchoolName, // For guest visitors
+            guider_name: guiderOrTeacherName,
+            number_of_visitors: numberOfPeople
+        };
+    }
 
     // Generate a unique ID for the visitor entry
     const visitorID = `${phoneNumber}-${Date.now()}`;
 
-    const visitorRef = ref(database, `visitor_guider_or_teacher/${year}/${month}/${date}/${visitorID}`);
+    // Save data under the selected registration type
+    const visitorRef = ref(database, `visitor/${registrationType}/${year}/${month}/${date}/${visitorID}`);
     set(visitorRef, visitorData)
-        .then(() => console.log("Visitor data saved successfully with in-time."))
+        .then(() => console.log(`Visitor data saved successfully under: ${registrationType}`))
         .catch((error) => console.error("Error saving visitor data:", error));
 }
 
@@ -57,11 +73,12 @@ function submitVisitorForm(event) {
     const companyName = document.getElementById('companyName').value.trim();
     const guiderName = document.getElementById('guiderName').value.trim();
     const phoneNumber = document.getElementById('phoneNumber').value.trim();
-    const numberOfVisitors = document.getElementById('numberOfVisitors').value.trim();
+    const numberOfPeople = document.getElementById('numberOfVisitors').value.trim();
+    const registrationType = document.querySelector('input[name="registrationType"]:checked')?.value;
 
     // Validate input
-    if (!companyName || !guiderName || !phoneNumber || !numberOfVisitors) {
-        alert("Please fill in all required fields.");
+    if (!companyName || !guiderName || !phoneNumber || !numberOfPeople || !registrationType) {
+        alert("Please fill in all required fields and select a registration type.");
         return;
     }
 
@@ -72,7 +89,7 @@ function submitVisitorForm(event) {
     }
 
     // Save data to Firebase
-    saveVisitorData(companyName, guiderName, phoneNumber, numberOfVisitors);
+    saveVisitorData(registrationType, companyName, guiderName, phoneNumber, numberOfPeople);
 
     // Display the notification
     const notification = document.getElementById('notification');
@@ -80,7 +97,7 @@ function submitVisitorForm(event) {
     notification.classList.add('show');
 
     // Clear the form fields
-    const form = document.getElementById('schoolVisitForm');
+    const form = document.getElementById('visitorForm');
     form.reset();
 
     // Optionally hide the notification after a few seconds
@@ -90,4 +107,4 @@ function submitVisitorForm(event) {
 }
 
 // Attach the submit event to the form
-document.getElementById('schoolVisitForm').addEventListener('submit', submitVisitorForm);
+document.getElementById('visitorForm').addEventListener('submit', submitVisitorForm);

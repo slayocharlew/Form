@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>School Visitor Registration Form</title>
+    <title>Visitor Registration Form</title>
     <link rel="stylesheet" href="css/visit.css">
     <link rel="icon" type="image/x-icon" href="/picture/logo2.png">
 </head>
@@ -15,7 +15,7 @@
         <div class="title_container">
             <h2>Company/School Visitor Registration</h2>
         </div>
-        <form id="schoolVisitForm">
+        <form id="visitorForm">
             <div class="input_field">
                 <label for="companyName">Company/School Name</label>
                 <input type="text" id="companyName" name="companyName" placeholder="Enter company or school name" required>
@@ -36,6 +36,18 @@
                 <label for="dateOfVisit">Date of Visit</label>
                 <input type="date" id="dateOfVisit" name="dateOfVisit" required>
             </div>
+            <!-- Registration Type -->
+            <div class="input_field">
+                <label>Registration Type:</label>
+                <div>
+                    <input type="radio" id="schoolVisit" name="registrationType" value="school visit" required>
+                    <label for="schoolVisit">School Registration</label>
+                </div>
+                <div>
+                    <input type="radio" id="guestVisit" name="registrationType" value="guest visitor" required>
+                    <label for="guestVisit">Company Registration</label>
+                </div>
+            </div>
             <button type="submit">Register Visit</button>
         </form>
         <div id="notification" class="notification">Registration successful!</div>
@@ -45,5 +57,3 @@
     <script type="module" src="Js/visit.js"></script>
 </body>
 </html>
-
-
