@@ -123,6 +123,44 @@ button:active {
     animation: slideIn 0.5s ease;
 }
 
+/* Styling for Radio Options */
+.radio_group {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.radio_container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.radio_container input[type="radio"] {
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+    accent-color: #ffeb3b; /* Changes the color of the selected radio */
+}
+
+.radio_container label {
+    font-size: 1em;
+    color: #ffeb3b;
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+
+.radio_container input[type="radio"]:hover {
+    transform: scale(1.1);
+}
+
+.radio_container input[type="radio"]:checked + label {
+    color: #fdd835;
+    text-shadow: 0 0 5px rgba(255, 235, 59, 0.7);
+}
+
+
 /* Fade In Animation */
 @keyframes fadeIn {
     0% { opacity: 0; transform: translateY(-10px); }
