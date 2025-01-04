@@ -20,9 +20,9 @@ const database = getDatabase(app);
 // Function to save visitor data
 function saveVisitorData(registrationType, companyOrSchoolName, guiderOrTeacherName, phoneNumber, numberOfPeople) {
     const today = new Date();
-    const year = today.getFullYear(); // e.g., 2024
-    const month = today.toLocaleString('default', { month: 'long' }); // e.g., December
-    const date = today.getDate(); // e.g., 25
+    const year = today.getFullYear();
+    const month = today.toLocaleString('default', { month: 'long' });
+    const date = today.getDate();
 
     // Get current in-time (hh:mm:ss format)
     const inTime = today.toLocaleTimeString();

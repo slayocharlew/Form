@@ -8,7 +8,7 @@ body.dark-mode {
     padding: 0;
 }
 
-/* Adding a dark overlay to improve text readability */
+/* dark overlay */
 body.dark-mode::before {
     content: "";
     position: fixed;
@@ -16,7 +16,7 @@ body.dark-mode::before {
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.6); 
+    background-color: rgba(0, 0, 0, 0.6);
     z-index: -1;
 }
 
@@ -33,7 +33,7 @@ header {
     align-items: center;
     height: 80vh;
     flex-direction: column;
-    gap: 20px; /* Space between buttons */
+    gap: 20px;
     padding: 10px;
 }
 
@@ -55,8 +55,12 @@ header {
     cursor: pointer;
     overflow: hidden;
     transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
-    width: 100%; /* Make the button fill the available width */
-    max-width: 300px; /* Maximum width for larger screens */
+    width: 100%;
+    max-width: 300px;
+    -webkit-transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+    -moz-transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+    -ms-transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+    -o-transition: all 0.6s cubic-bezier(0.23, 1, 0.32, 1);
 }
 
 /* SVG Icon Styling */
@@ -148,6 +152,6 @@ header {
     .animated-button {
         font-size: 14px;
         padding: 12px 20px;
-        max-width: 90%; /* Take up more width on smaller screens */
+        max-width: 90%;
     }
 }
