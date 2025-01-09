@@ -1,4 +1,4 @@
-// Import thf necessary Firebase functions
+// Import the necessary Firebase functions
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-app.js";
 import { getDatabase, ref, set, get, update } from "https://www.gstatic.com/firebasejs/10.14.1/firebase-database.js";
 
@@ -31,7 +31,7 @@ function addChild() {
         </div>
         <div class="input_field">
             <label for="childAge${childCount}">Child Age</label>
-            <input type="number" id="childAge${childCount}" name="childAge[]" placeholder="Enter child age" required>
+            <input type="number" id="childAge${childCount}" name="childAge[]" placeholder="Enter child age" required min="1" max="18">
         </div>
     `;
 
@@ -74,6 +74,13 @@ function submitForm(event) {
     const children = Array.from(document.querySelectorAll('.child')).map((child) => {
         const name = child.querySelector(`[name="childName[]"]`).value.trim();
         const age = child.querySelector(`[name="childAge[]"]`).value.trim();
+
+        // Validate age
+        if (age < 1 || age > 18) {
+            alert("Each child's age must be between 1 and 18.");
+            throw new Error("Invalid age for child.");
+        }
+
         return { name, age };
     });
 
