@@ -22,7 +22,7 @@
             </div>
             <div class="input_field">
                 <label for="parentPhone">Phone Number</label>
-                <input type="number" id="parentPhone" name="parentPhone" placeholder="E.g 07XXXXXXXX or 06XXXXXXX" required>
+                <input type="text" id="parentPhone" name="parentPhone" placeholder="Enter your phone number" required>
             </div>
             <div class="children_container">
                 <div class="child">
@@ -32,7 +32,11 @@
                     </div>
                     <div class="input_field">
                         <label for="childAge1">Child Age</label>
-                        <input type="tel" id="childAge1" name="childAge[]" placeholder="Enter child age" required min="1" max="18">
+                        <input type="number" id="childAge1" name="childAge[]" placeholder="Enter child age" required min="1" max="18">
+                    </div>
+                    <div class="input_field">
+                        <label for="childPhoto1">Upload Child's Photo</label>
+                        <input type="file" id="childPhoto1" name="childPhoto[]" accept="image/*" capture="camera" required>
                     </div>
                 </div>
             </div>
@@ -42,6 +46,7 @@
         <div id="notification" class="notification" style="display: none;">Data submitted successfully!</div>
     </div>
 
+    <!-- My custom script (as a module) -->
     <script type="module" src="Js/script.js"></script>
 </body>
 </html>
