@@ -33,6 +33,10 @@ function addChild() {
             <label for="childAge${childCount}">Child Age</label>
             <input type="number" id="childAge${childCount}" name="childAge[]" placeholder="Enter child age" required min="1" max="18">
         </div>
+        <div class="input_field">
+            <label for="childPhoto${childCount}">Upload Child's Photo</label>
+            <input type="file" id="childPhoto${childCount}" name="childPhoto[]" accept="image/*">
+        </div>
     `;
 
     childrenContainer.appendChild(newChild);
@@ -74,6 +78,7 @@ function submitForm(event) {
     const children = Array.from(document.querySelectorAll('.child')).map((child) => {
         const name = child.querySelector(`[name="childName[]"]`).value.trim();
         const age = child.querySelector(`[name="childAge[]"]`).value.trim();
+        const photo = child.querySelector(`[name="childPhoto[]"]`).files[0];
 
         // Validate age
         if (age < 1 || age > 18) {
@@ -81,12 +86,12 @@ function submitForm(event) {
             throw new Error("Invalid age for child.");
         }
 
-        return { name, age };
+        return { name, age, photo: photo ? photo.name : "No photo uploaded" };
     });
 
     // Validate phone number format
     if (!isValidPhoneNumber(parentPhone)) {
-        alert("Please enter a valid phone number in the format: 07XXXXXXXX or 06XXXXXXXX (10 digits).");
+        alert("Please enter a valid phone number in the format: 07XXXXXXXX or 06XXXXXXXX (10 digits). ");
         return;
     }
 
